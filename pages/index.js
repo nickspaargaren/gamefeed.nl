@@ -1,3 +1,4 @@
+import { server } from '../config';
 import styled from "styled-components"
 
 const Feed = styled.div`
@@ -24,12 +25,12 @@ function Home({items}) {
       <>
         <Feed>
           <h1>Gamefeed.nl</h1>
-          {items.items.map((item, index) => (
-            <Item key={index} href={`https://www.youtube.com/watch?v=${item.id.videoId}`} rel="noopener noreferrer" target="_blank">
-              <img src={item.snippet.thumbnails.default.url} width={item.snippet.thumbnails.default.width} height={item.snippet.thumbnails.default.height}/>
+          {items.map((item, index) => (
+            <Item key={index} href={`https://www.youtube.com/watch?v=${item.videoId}`} rel="noopener noreferrer" target="_blank">
+              <img src={item.image} />
               <div>
-                <h3>{item.snippet.title}</h3>
-                <p>{item.snippet.description}</p>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
               </div>
             </Item>
           ))}
@@ -40,7 +41,7 @@ function Home({items}) {
 
 export async function getStaticProps() {
 
-  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${process.env.APIKEYGOOGLE}&channelId=UCjBp_7RuDBUYbd1LegWEJ8g&part=snippet,id&order=date&maxResults=20`)
+  const res = await fetch(`${server}/api`)
   const items = await res.json()
 
   return {
