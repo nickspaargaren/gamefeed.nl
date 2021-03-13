@@ -39,7 +39,7 @@ function Home({items}) {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
   const res = await fetch(`${server}/api`)
   const items = await res.json()
