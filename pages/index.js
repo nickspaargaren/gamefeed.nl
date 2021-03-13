@@ -25,11 +25,30 @@ function Home({items}) {
       <>
         <Feed>
           <h1>Gamefeed.nl</h1>
-         hai
+          {items.map((item, index) => (
+            <Item key={index} href={`https://www.youtube.com/watch?v=${item.videoId}`} rel="noopener noreferrer" target="_blank">
+              <img src={item.image} />
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </Item>
+          ))}
         </Feed>
       </>
     )
 }
 
+export async function getStaticProps() {
+
+  const res = await fetch(`${server}/api`)
+  const items = await res.json()
+
+  return {
+    props: {
+      items,
+    },
+  }
+}
 
 export default Home
