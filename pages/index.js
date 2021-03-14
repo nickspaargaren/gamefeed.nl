@@ -20,7 +20,7 @@ const Item = styled.a`
   color: inherit;
 
   &:hover {
-    background: linear-gradient(90deg, #f8f6f7, transparent);
+    background: linear-gradient(90deg, #f8f6f7, #fff);
   }
 
   h3,
