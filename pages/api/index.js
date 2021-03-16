@@ -20,15 +20,16 @@ cron.schedule('* * * * *', () => {
     .then(response => response.json())
     .then(data => {
       // console.log(data)
-      const query = { title: item.snippet.title };
-      const update = { $set: { title: item.snippet.title, description: item.snippet.description, etag: data.etag, image: item.snippet.thumbnails.default.url, videoId: item.id.videoId, channel: item.snippet.channelTitle, publishedAt: item.snippet.publishedAt }};
-      const options = { upsert: true };
 
-      data.items.map((item, index) => (
+      data.items.map((item, index) =>  { 
+        const query = { title: item.snippet.title };
+        const update = { $set: { title: item.snippet.title, description: item.snippet.description, etag: data.etag, image: item.snippet.thumbnails.default.url, videoId: item.id.videoId, channel: item.snippet.channelTitle, publishedAt: item.snippet.publishedAt }};
+        const options = { upsert: true };
 
-        db.collection('feed').updateOne(query, update, options)
-
-      ))
+        return (
+          db.collection('feed').updateOne(query, update, options)
+        )
+      })
 
 
       // log updaten
@@ -37,7 +38,7 @@ cron.schedule('* * * * *', () => {
       )
       
     })
-    .catch(err => console.log(error))
+    .catch(err => console.log(err))
 
   })
 
