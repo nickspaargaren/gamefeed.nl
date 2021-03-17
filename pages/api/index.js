@@ -1,3 +1,4 @@
+import { server } from '../../config';
 const app = require('express')()
 
 var cron = require('node-cron');
@@ -34,7 +35,7 @@ cron.schedule('* * * * *', () => {
 
       // log updaten
       db.collection('log').insertOne(
-        { feed: "xbox", etag: "BTMUwOpUrva3_ln-f9Sp3dzpLiY", ts: Date.now() }
+        { feed: "xbox", etag: "BTMUwOpUrva3_ln-f9Sp3dzpLiY", ts: Date.now(), server: `${server}` }
       )
       
     })
@@ -55,7 +56,7 @@ app.get('/api', (req, res) => {
     if (err) throw err
 
     var db = client.db('main')
-    db.collection('feed').find().toArray((err, result) => {
+    db.collection('feed').find().sort({ publishedAt: -1 }).toArray((err, result) => {
       if (err) throw err
       res.setHeader('Content-Type', 'application/json')
       res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
