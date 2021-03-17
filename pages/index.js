@@ -2,6 +2,9 @@ import { server } from '../config';
 import styled from "styled-components"
 import GlobalStyle from "../styles/globalStyles";
 
+import moment from 'moment';
+moment.locale('nl');
+
 const Feed = styled.div`
   margin: auto;
   max-width: 1000px;
@@ -42,7 +45,7 @@ function Home({items}) {
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
-                <small>{item.publishedAt}</small>
+                <small>{moment(item.publishedAt).format("DD MMMM YYYY hh:mm:ss", "nl")}</small>
               </div>
             </Item>
           ))}
