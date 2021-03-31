@@ -1,6 +1,7 @@
 import { server } from '../config';
 import styled from "styled-components"
 import GlobalStyle from "../styles/globalStyles";
+import Image from 'next/image'
 
 import moment from 'moment';
 moment.locale('nl');
@@ -29,7 +30,8 @@ const Item = styled.a`
   h3,
   h3 + p {margin: 0;}
 
-  img {border-radius: 3px; overflow: hidden;}
+  div:first-child {margin-bottom: auto !important;}
+  div:first-child img {border-radius: 3px; overflow: hidden;}
 `;
 
 function Home({items}) {
@@ -41,7 +43,7 @@ function Home({items}) {
         <h1>Gamefeed.nl</h1>
           {items.map((item, index) => (
             <Item key={index} href={`https://www.youtube.com/watch?v=${item.videoId}`} rel="noopener noreferrer" target="_blank">
-              <img src={item.image} />
+              <Image src={item.image} alt={item.title} width={120} height={90} />
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
