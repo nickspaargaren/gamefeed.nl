@@ -1,7 +1,6 @@
 
 import { server } from '../../config';
 import channels from '../../data/channels'
-const fetch = require('node-fetch');
 var MongoClient = require('mongodb').MongoClient
 
 const update = (req, res) => {
